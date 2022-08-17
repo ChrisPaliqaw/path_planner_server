@@ -2,13 +2,14 @@ bt_navigator:
   ros__parameters:
     use_sim_time: True
     global_frame: map
-    robot_base_frame: base_link
+    robot_base_frame: robot_base_link
     odom_topic: /odom
     bt_loop_duration: 10
     default_server_timeout: 20
+    # Removing actions that aren't available in Foxy
     plugin_lib_names:
     - nav2_compute_path_to_pose_action_bt_node
-    - nav2_compute_path_through_poses_action_bt_node
+    # - nav2_compute_path_through_poses_action_bt_node
     - nav2_follow_path_action_bt_node
     - nav2_back_up_action_bt_node
     - nav2_spin_action_bt_node
@@ -30,11 +31,11 @@ bt_navigator:
     - nav2_transform_available_condition_bt_node
     - nav2_time_expired_condition_bt_node
     - nav2_distance_traveled_condition_bt_node
-    - nav2_single_trigger_bt_node
+    # - nav2_single_trigger_bt_node
     - nav2_is_battery_low_condition_bt_node
-    - nav2_navigate_through_poses_action_bt_node
+    # - nav2_navigate_through_poses_action_bt_node
     - nav2_navigate_to_pose_action_bt_node
-    - nav2_remove_passed_goals_action_bt_node
+    # - nav2_remove_passed_goals_action_bt_node
 
 
 recoveries_server:
@@ -49,8 +50,8 @@ recoveries_server:
       plugin: "nav2_recoveries/BackUp"
     wait:
       plugin: "nav2_recoveries/Wait"
-    global_frame: odom
-    robot_base_frame: base_link
+    global_frame: robot_odom
+    robot_base_frame: robot_base_link
     transform_timeout: 0.1
     use_sim_time: true
     simulate_ahead_time: 2.0
