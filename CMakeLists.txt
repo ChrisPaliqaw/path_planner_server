@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 project(path_planner_server)
+set(NAV_TO_POSE_ACTION_CLIENT_NODE_NAME nav_to_pose_action_client)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -29,6 +30,19 @@ if(BUILD_TESTING)
   #set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+include_directories(include)
+
+add_executable(${NAV_TO_POSE_ACTION_CLIENT_NODE_NAME} src/${NAV_TO_POSE_ACTION_CLIENT_NODE_NAME}.cpp)
+
+ament_target_dependencies(${NAV_TO_POSE_ACTION_CLIENT_NODE_NAME}
+  "rclcpp"
+)
+
+install(TARGETS
+   ${NAV_TO_POSE_ACTION_CLIENT_NODE_NAME}
+   DESTINATION lib/${PROJECT_NAME}
+)
 
 install(
   DIRECTORY launch config rviz

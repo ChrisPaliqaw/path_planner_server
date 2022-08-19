@@ -10,6 +10,7 @@ def generate_launch_description():
     controller_yaml = os.path.join(config_folder, 'controller.yaml')
     recovery_yaml = os.path.join(config_folder, 'recovery.yaml')
     bt_xml_path = os.path.join(config_folder, 'behavior.xml')
+    remappings = [('/cmd_vel', '/robot/cmd_vel')]
     return LaunchDescription([
         Node(
             package='nav2_planner',
@@ -21,12 +22,14 @@ def generate_launch_description():
             package='nav2_controller',
             executable='controller_server',
             output='screen',
-            parameters=[controller_yaml]),
+            parameters=[controller_yaml],
+            remappings=remappings),
         Node(
             package='nav2_recoveries',
             executable='recoveries_server',
             name='recoveries_server',
-            output='screen'),
+            output='screen',
+            remappings=remappings),
         Node(
             package='nav2_bt_navigator',
             executable='bt_navigator',
