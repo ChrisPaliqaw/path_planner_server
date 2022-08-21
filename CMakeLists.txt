@@ -19,6 +19,7 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(geometry_msgs REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -37,6 +38,7 @@ add_executable(${NAV_TO_POSE_ACTION_CLIENT_NODE_NAME} src/${NAV_TO_POSE_ACTION_C
 
 ament_target_dependencies(${NAV_TO_POSE_ACTION_CLIENT_NODE_NAME}
   "rclcpp"
+  "geometry_msgs"
 )
 
 install(TARGETS
