@@ -71,7 +71,7 @@ void NavToPoseActionClient::PublishGoalPose() {
   RCLCPP_INFO(get_logger(), "Publishing goal pose");
   // https://docs.ros.org/en/foxy/Tutorials/Intermediate/Tf2/Learning-About-Tf2-And-Time-Cpp.html
   goal_pose_->header.stamp = this->get_clock()->now();
-  goal_pose_->header.frame_id = "world";
+  goal_pose_->header.frame_id = "map";
   goal_pose_publisher_->publish(*goal_pose_);
 }
 
