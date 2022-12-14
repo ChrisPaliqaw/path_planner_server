@@ -5,7 +5,7 @@
 - [localization_server](https://github.com/christophomos/localization_server)
 
 ## Step 3 Path planning
-Run everything from step 2, but use `rviz2` with the config file `path_planner_server/rviz/pathplanner.rviz`
+Run everything from step 1 & 2 (see dependencies), but use `rviz2` with the config file `path_planner_server/rviz/pathplanner.rviz`
 in the `plan` shell
 ```
 cd ros2_ws/
