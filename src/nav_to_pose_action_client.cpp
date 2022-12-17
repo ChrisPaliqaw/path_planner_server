@@ -1,9 +1,11 @@
-#include <memory>
-#include <rclcpp/rclcpp.hpp>
-#include <geometry_msgs/msg/pose_stamped.hpp>
 #include "../include/path_planner_server/nav_to_pose_action_client.hpp"
 #include "rclcpp/logging.hpp"
+#include <chrono>
+#include <geometry_msgs/msg/pose_stamped.hpp>
+#include <memory>
+#include <rclcpp/rclcpp.hpp>
 
+using namespace std::chrono_literals;
 
 /*
 user:~$ ros2 interface show geometry_msgs/msg/PoseStamped
@@ -47,24 +49,24 @@ float64 z 0
 float64 w 1
 */
 
-namespace path_planner_server
-{
-NavToPoseActionClient::NavToPoseActionClient():
-    Node("nav_to_pose_action_client")
-{
-    auto ret = rcutils_logging_set_logger_level(
-        get_logger().get_name(), RCUTILS_LOG_SEVERITY_DEBUG);
+namespace path_planner_server {
+NavToPoseActionClient::NavToPoseActionClient()
+    : Node("nav_to_pose_action_client") {
+  auto ret = rcutils_logging_set_logger_level(get_logger().get_name(),
+                                              RCUTILS_LOG_SEVERITY_DEBUG);
 
-    goal_pose_publisher_ =
+  goal_pose_publisher_ =
       create_publisher<geometry_msgs::msg::PoseStamped>(kGoalPoseTopic, 10);
-    goal_pose_ = std::make_shared<geometry_msgs::msg::PoseStamped>();
+  goal_pose_ = std::make_shared<geometry_msgs::msg::PoseStamped>();
 
-    PublishGoalPose();
+  rclcpp::sleep_for(3s);
+  PublishGoalPose();
 
-    if (ret != RCUTILS_RET_OK) {
-        RCLCPP_ERROR(get_logger(), "Error setting severity: %s", rcutils_get_error_string().str);
-        rcutils_reset_error();
-    }
+  if (ret != RCUTILS_RET_OK) {
+    RCLCPP_ERROR(get_logger(), "Error setting severity: %s",
+                 rcutils_get_error_string().str);
+    rcutils_reset_error();
+  }
 }
 
 void NavToPoseActionClient::PublishGoalPose() {
@@ -75,13 +77,32 @@ void NavToPoseActionClient::PublishGoalPose() {
   goal_pose_publisher_->publish(*goal_pose_);
 }
 
+/*
+$ ros2 topic echo /goal_pose
+header:
+  stamp:
+    sec: 1671301618
+    nanosec: 506202153
+  frame_id: map
+pose:
+  position:
+    x: 0.08019065856933594
+    y: -0.01192164421081543
+    z: 0.0
+  orientation:
+    x: 0.0
+    y: 0.0
+    z: 0.01731638177266458
+    w: 0.9998500602201829
+*/
+
 const std::string NavToPoseActionClient::kGoalPoseTopic = "goal_pose";
 
 } // namespace path_planner_server
 
 int main(int argc, char *argv[]) {
   rclcpp::init(argc, argv);
-  
+
   auto nav_to_pose_action_client =
       std::make_shared<path_planner_server::NavToPoseActionClient>();
 
