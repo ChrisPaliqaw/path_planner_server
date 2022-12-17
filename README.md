@@ -1,5 +1,7 @@
 # path_planner_server
 
+Simple ROS2 CPP script that publishes a single message to goal_pose to navigate to the robot's starting position: x,y = (0,0) with orientation 0
+
 ## Dependencies
 - [cartographer_slam](https://github.com/christophomos/cartographer_slam)
 - [localization_server](https://github.com/christophomos/localization_server)
